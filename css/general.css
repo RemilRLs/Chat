@@ -1,0 +1,23 @@
+.center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.column{
+    display: flex;
+    flex-direction: column;
+}
+
+.margin-top{
+    margin-top: 20px;
+}
+
+.cursor{
+    cursor: pointer;
+}
+
+label{
+    margin-bottom: 20px;
+}

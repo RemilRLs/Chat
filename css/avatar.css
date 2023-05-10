@@ -1,0 +1,145 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: 'Roboto', sans-serif;
+  }
+
+body{
+    margin: 0 auto;
+
+    width: 100%;
+    height: 721px;
+
+}
+
+.choose-avatar{
+    width: 100%;
+    height: 100%;
+    
+
+    background-image: linear-gradient(to bottom right, #007dfa, #010101);
+
+}
+
+/* Property Design for Name. */
+
+.choose-avatar .square-name{
+
+    width: 50%;
+    height: 400px;
+
+    background-color: rgb(255, 255, 255);
+
+    border-radius: 20px;
+
+    margin-top: 50px;
+
+    display: none;
+}
+
+.choose-avatar .square-name.active{
+    display: block;
+}
+
+
+.choose-avatar .square-name .title-name{
+    margin-top: 30px;
+}
+
+.choose-avatar .square-name .title-name h2{
+    margin-bottom: 30px;
+    font-size: 18px;
+    
+    color: rgb(64, 64, 64);
+}
+
+.choose-avatar .square-name .title-name h4{
+    font-size: 20px;
+}
+
+/* Property Design for Form Name. */
+
+.square-name .choose-name{
+    margin-top: 60px;
+}
+
+.square-name .choose-name .submit .submit-button{
+    width: 150px;
+    height: 35px;
+
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+
+    color: white;
+    font-weight: bold;
+    
+    background-color: rgb(0, 132, 255);
+}
+
+.square-name .choose-name .name{
+    width: 250px;
+    height: 35px;
+
+    padding-left: 5px;
+
+    border-radius: 5px;
+
+}
+
+
+/* Property Design Password. */
+
+.square-password{
+    width: 50%;
+    height: 400px;
+
+    background-color: rgb(255, 255, 255);
+
+    border-radius: 20px;
+
+    margin-top: 50px;
+
+    display: none;
+}
+
+.square-password.active{
+    display: block;
+    
+}
+
+.square-password .password-form{
+    margin-top: 55px;
+}
+
+.square-password .password-form input{
+    width: 250px;
+    height: 35px;
+
+    padding-left: 5px;
+    margin-top: 25px;
+    border-radius: 5px;
+}
+
+.choose-avatar .square-password .title-name h4{
+    margin-bottom: 30px;
+    font-size: 18px;
+
+    margin-top: 50px;
+    
+    color: rgb(64, 64, 64);
+}
+
+/* Erreur handle. */
+.error-password{
+    color: red;
+    display: none;
+}
+
+
+.error-username{
+    color: red;
+    display: none;
+}
