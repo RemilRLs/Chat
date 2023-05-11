@@ -16,20 +16,13 @@ app.use(compression()); // Reduce frame size.
 // Use static server middleware
 app.use(serve_static(__dirname));
 
-app.use(express.json());
-
-
 // Middleware to display request parameters and path
 app.use(function(req, res, next) {
     console.debug('Path:', req.path);
     console.debug('Parameters:', req.query);
-    next(); // Go to the next action/function.
+    next(); // Go to the next middleware.
 });
-
-app.get('/', function(req, res) { // If the user go the root we give him index.html
-    res.sendFile(path.join(__dirname + '/index.html'));
-});
-
+        
 
 
 app.use(express.json()); // Middleware that is going to analyse the body of the request of the user.
@@ -86,6 +79,43 @@ app.post('/', async function(req, res) { // We get the form username.
 
     res.json({message: 'Credential receive', redirectUrl: '/login.html'}); // We answer with a json respond -> Everything is fine.
     
+});
+
+// Endpoint to check if a username is already taken.
+
+app.post('/validateUsername', function(req, res){
+    
+    fs.readFile(__dirname + '/database/user_database.json', (err, data) => {
+        if(err){
+            console.error(`Something went wrong when reading the database ${err}`);
+            return;
+        }
+
+        const users = JSON.parse(data);
+
+        for(let user of users){ // We go through each user of the database.
+            if(user['username'] === req.body.username){
+                res.status(422).json({message:'Username already taken...'});
+                return;
+            }
+        }
+        res.json({message: 'Username validation'});
+    });
+
+    
+});
+
+// Endpoint login page.
+
+app.post('/login', async function(req, res){
+
+    
+
+    hashedPassword = await hashPassword(req.body.password);
+
+    console.debug(`${req.body.username} & ${hashedPassword}`);
+
+    res.json({message:'Credential are valid.'});
 });
 
 
