@@ -1,0 +1,2 @@
+- Vérification user credential côté client ainsi que serveur (on évite que le client ne modifie les scripts de son côté)
+- Hashage des mots de passe à l'aide de bcrypt.

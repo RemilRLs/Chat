@@ -3,9 +3,13 @@ var serve_static = require('serve-static');
 var http = require('http');
 var compression = require('compression');
 
+
 const {Server} = require("socket.io");
 const io = new Server();
 const app = express();
+const bcrypt = require('bcrypt');
+const { slateblue } = require('color-name');
+const fs = require('fs');
 
 app.use(compression()); // Reduce frame size.
 
@@ -33,21 +37,57 @@ app.use(express.urlencoded({ extended: true })); // Same.
 
 // Endpoint to check the credential of the user.
 
-app.post('/', function(req, res) { // We get the form username.
+app.post('/', async function(req, res) { // We get the form username.
     const username = req.body.username; // We get the username of the user.
     const password = req.body.password; // We get the password of the user.
     const passwordConfirm = req.body.passwordConfirm;
 
-    console.log(`${username} & ${password} & ${passwordConfirm}`);
+    console.debug(`${username} & ${password} & ${passwordConfirm}`);
 
     if(password !== passwordConfirm){ // Password didn't match verification.
         res.status(422).send("Password didn't match, please retry..."); // Input not conform (422).
         return;
     }
 
+    hashedPassword = await hashPassword(password); // We hash the password of the user.
+
+    const user = {
+        username: username,
+        password: hashedPassword
+    }
+
+    const data = JSON.stringify(user); // We convert the user information into a string.
+
+    console.debug(`${user.username} & ${user.password}`);
+
+    fs.readFile(__dirname + '/database/user_database.json', (err, fileData) => {
+
+        if(err){ // Error when we read the file.
+            console.error(`Something went wrong reading the database ${err}`);
+            return;
+        }
+        
+        // We write the user credential into the json tab.
+        const users = JSON.parse(fileData); 
+        users.push(user); // We go to the end of the tab and we push the user credential into.
+
+
+        // Then after so many attempt that we have done I can finally put me credential into me file.
+        
+        fs.writeFile(__dirname + '/database/user_database.json', JSON.stringify(users), (error) => {
+            if (error) {
+                console.error(`Cannot write into the database... Error : ${error}`);
+                return;
+            }
+
+            console.debug(`User added to the database.`);
+        });
+    });
+
     res.json({message: 'Credential receive', redirectUrl: '/login.html'}); // We answer with a json respond -> Everything is fine.
     
 });
+
 
 var serveur = http.Server(app);
 
@@ -65,4 +105,13 @@ io.sockets.on('connection', function(socket){
     });
 });
 
-    
+
+/* General function of the program. */
+
+
+async function hashPassword(password){
+    const salt = await bcrypt.genSalt(10); // Level of security here 10.
+    const hashedPassword = await bcrypt.hash(password, salt); // We hash the password with the salt that we just created.
+
+    return hashedPassword;
+}
