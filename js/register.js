@@ -131,7 +131,7 @@ function checkCredential(userObject){
         .then(response => response.json()) // We wait a answer from the NodeJS server.
         .then(data => { // Validation
             console.log('Success:', data);
-            window.location.href = data.redirectUrl; // Redirection to the login.html page.
+            window.location.href = data['redirectUrl']; // Redirection to the login.html page.
         })
         .catch((error) => { // Error
             console.error('Error:', error);

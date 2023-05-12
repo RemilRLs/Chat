@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset = "UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Interactive Chat | Chat</title> 
+
+    <!-- CSS. -->
+
+    <link rel="stylesheet" type="text/css" href="css/avatar.css"/>
+    <link rel="stylesheet" type="text/css" href="css/general.css"/>
+
+
+
+</head>
+
+<body>
+    <section class="chat">
+        <div class="message">
+            
+        </div>
+
+        <div class="message-input">
+            <form class="send-message">
+                <textarea class="chat-message" rows="4" placeholder="Send a message"></textarea>
+                <button type="button" class="btn" onclick="sendMessage()">Login</button>
+            </form>
+            
+        </div>
+    </section>
+
+
+
+    <!-- Javascript. -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/socket_chat.js"></script>
+</body>

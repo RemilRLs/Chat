@@ -49,6 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function credentialSubmit(){
 
+  errorMessage.innerHTML = ``;
+
   credentialUser.username = username.value;
   credentialUser.password = password.value;
 
@@ -62,11 +64,17 @@ function credentialSubmit(){
     body: JSON.stringify(credentialUser),
     
   })
-  .then(response =>{
+  .then(response => { 
     if(!response.ok){
-      errorMessage.innerHTML += `Wrong password or username, please retry...`
+      errorMessage.innerHTML += `Invalid username or password...`
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    return response.json()
+  })
+  .then(data => { // Validation
+    console.log('Success:', data);
+    window.location.href = data['redirectUrl']; // Redirection to the chat.html page.
   });
 }
 

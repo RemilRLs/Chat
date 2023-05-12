@@ -4,12 +4,17 @@ var http = require('http');
 var compression = require('compression');
 
 
-const {Server} = require("socket.io");
-const io = new Server();
+
 const app = express();
+const server = http.createServer(app);
+var io = require('socket.io')(server); // 1 hour to fix that...
 const bcrypt = require('bcrypt');
-const { slateblue } = require('color-name');
 const fs = require('fs');
+
+
+var listUser = {}; // We store here the user list that are connected to the chat.
+
+
 
 app.use(compression()); // Reduce frame size.
 
@@ -29,6 +34,10 @@ app.use(express.json()); // Middleware that is going to analyse the body of the 
 app.use(express.urlencoded({ extended: true })); // Same.
 
 // Endpoint to check the credential of the user.
+
+app.get('/register', (req, res) =>{
+    res.sendFile(__dirname + '/index.html');
+});
 
 app.post('/', async function(req, res) { // We get the form username.
     const username = req.body.username; // We get the username of the user.
@@ -59,7 +68,7 @@ app.post('/', async function(req, res) { // We get the form username.
             console.error(`Something went wrong reading the database ${err}`);
             return;
         }
-        
+
         // We write the user credential into the json tab.
         const users = JSON.parse(fileData); 
         users.push(user); // We go to the end of the tab and we push the user credential into.
@@ -107,35 +116,105 @@ app.post('/validateUsername', function(req, res){
 
 // Endpoint login page.
 
-app.post('/login', async function(req, res){
+app.get('/login', (req, res) =>{
+    res.sendFile(__dirname + '/login.html');
+});
 
+app.post('/login',  function(req, res){
+    const username = req.body.username;
+    const password = req.body.password;
+
+    var userFind = '';
+    var hashedPassword = ``;
+
+    // We check if the user exist into the database.
+
+    fs.readFile(__dirname + '/database/user_database.json', async function(err, data)  {
+        if(err){
+            console.error(`Something went wrong when reading the database ${err}`);
+            return;
+        }
+
+        const users = JSON.parse(data);
+
+        for(let user of users){ // We go through each user of the database.
+            if(user['username'] === username){ // We found the user.
+                userFind = user['username'];
+                hashedPassword = user['password'];
+
+            }
+        }
+
+        if(!userFind){
+            res.status(422).json({message: 'Invalid username or password'});
+            return;
+        }
+        console.debug(`${userFind} & ${hashedPassword}`);
+
+        const matchPassword = await bcrypt.compare(password, hashedPassword); // We compare the hash with password.
+        
+        if(!matchPassword){
+            res.status(422).json({message: 'Invalid username or password'});
+            return;
+        }
+
+        res.json({message: 'Login success', redirectUrl: `/chat.html?username=${username}`}); // All test passed.
+    });
+    
     
 
-    hashedPassword = await hashPassword(req.body.password);
 
-    console.debug(`${req.body.username} & ${hashedPassword}`);
 
-    res.json({message:'Credential are valid.'});
+    //console.debug(`${req.body.username} & ${hashedPassword}`);
+
 });
 
 
-var serveur = http.Server(app);
-
-serveur.listen(8080, function(){
-    console.log('Listening on port 8080');
+app.get('/chat', (req, res) =>{
+    res.sendFile(__dirname + '/chat.html');
 });
 
 
 
-io.sockets.on('connection', function(socket){
-    console.log("Un client s'est connecté");
+
+io.on('connection', function(socket){
+    console.debug("A user just connected", socket.id);
+    
+
+    // We create a socket for the user.
+    socket.on('enter', (username) =>{
+        // TODO check if the user already exist.
+
+
+        listUser[socket.id] = username;
+
+        console.debug('User connected');
+
+        io.emit('user connected', username); // Everyone will be inform that a new user just connected.
+
+    });
+
+    socket.on('send message', (msg) =>{ // We emit to everyone the message from the user.
+        console.debug(msg, listUser[socket.id]); // OH !
+
+        var messageObject = {
+            message : msg,
+            user : listUser[socket.id]
+        }
+
+        io.emit('message from user', messageObject);
+    });
 
     socket.on('disconnect', function(){
-        console.log("Un client s'est déconnecté");
+        console.debug("A user just disconnected", socket.id);
+        delete listUser[socket.id]; // We delete the user because he just disconnected.
     });
+
 });
 
-
+server.listen(8080, function(){
+    console.log('Listening on port 8080');
+});
 /* General function of the program. */
 
 
