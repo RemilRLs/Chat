@@ -10,7 +10,7 @@
 
     <!-- CSS. -->
 
-    <link rel="stylesheet" type="text/css" href="css/avatar.css"/>
+    <link rel="stylesheet" type="text/css" href="css/chat.css"/>
     <link rel="stylesheet" type="text/css" href="css/general.css"/>
 
 
@@ -18,18 +18,31 @@
 </head>
 
 <body>
-    <section class="chat">
-        <div class="message">
-            
-        </div>
+        <section class="chat">
+            <div class="square-chat">
+                <div class="private-message">
+                    <div class="list-user-div column">
+                    </div>
+                </div>
+                <div class="chat-general">
+                    <div class="list-message">
+                        <!-- Message from all the users will be there. -->
+                    </div>
 
-        <div class="message-input">
-            <form class="send-message">
-                <textarea class="chat-message" rows="4" placeholder="Send a message"></textarea>
-                <button type="button" class="btn" onclick="sendMessage()">Login</button>
-            </form>
-            
-        </div>
+                    <div class="list-private-message hidden">
+                        <!-- Private chat messages -->
+                      </div>
+                    <div class="message-input">
+                        <form class="send-message">
+                            <textarea class="chat-message" rows="4" placeholder="Type something"></textarea>
+                            <button type="button" class="btn-public" onclick="sendMessage()">Send</button>
+                            <button type="button" class="btn-private hidden" onclick="sendPrivateMessage()">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </section>
 
 
@@ -37,4 +50,5 @@
     <!-- Javascript. -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/socket_chat.js"></script>
+    <script src="/js/chat.js"></script>
 </body>

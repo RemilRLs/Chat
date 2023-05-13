@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+    background-color: rgba(0, 132, 255, 0.562);
+  }
+  
+
+.chat{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width : 100%;
+}
+
+/* Property of the chat. */
+
+.chat .square-chat{
+    display: flex;
+
+    width: 80%;
+    height: 700px;
+
+    background-color: white;
+
+    border-radius: 5px;
+
+}
+
+.chat .square-chat .private-message{
+  width: 20%;
+  height: 100%;
+
+  padding: 20px;
+  
+  background-image: linear-gradient(to bottom right, #007dfa, #010101);
+
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+/* Chat Message Display Property. */
+
+.chat .square-chat .chat-general{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 80%;
+
+  padding: 20px;
+}
+
+
+.chat .square-chat .chat-general .list-message{
+  width: 100%;
+  height: 80%;
+
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+
+/* General Property Chat. */
+
+.message{
+  margin: 5px;
+
+}
+
+.message-left {
+  text-align: left;
+  align-self: flex-start;
+}
+
+.message-right {
+  text-align: right;
+  align-self: flex-end;
+}
+
+.blue{
+  background-color: #007dfa;
+
+  padding: 10px;
+
+  border-radius: 10px;
+}
+
+.green{
+  background-color: #0f7905;
+
+  padding: 10px;
+
+  border-radius: 10px;
+}
+
+.hidden{
+  display: none!important; /* I have to do this... I don't know where was the problem...*/
+}

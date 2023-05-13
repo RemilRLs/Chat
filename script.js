@@ -13,6 +13,8 @@ const fs = require('fs');
 
 
 var listUser = {}; // We store here the user list that are connected to the chat.
+var listUserPrivate = {}; // Store the user list for private message key : username | value : socket.id.
+var listUsername = [];
 
 
 
@@ -158,7 +160,7 @@ app.post('/login',  function(req, res){
             return;
         }
 
-        res.json({message: 'Login success', redirectUrl: `/chat.html?username=${username}`}); // All test passed.
+        res.json({message: 'Login success', redirectUrl: `/chat?username=${username}&password=${hashedPassword}`}); // All test passed.
     });
     
     
@@ -171,13 +173,47 @@ app.post('/login',  function(req, res){
 
 
 app.get('/chat', (req, res) =>{
-    res.sendFile(__dirname + '/chat.html');
+
+    var username = req.query.username;
+    var hashedPassword = req.query.password;
+    var isAccountExist = false;
+
+    fs.readFile(__dirname + '/database/user_database.json', (err, data) =>{
+        if(err){
+            console.debug(`Something went wrong when opening the database... Error : ${err}`);
+            return;
+        }
+
+        users = JSON.parse(data);
+
+        for(let user of users){ // We go through each user of the database.
+            if(user['username'] === username && user['password'] == hashedPassword){ // We found the user,
+                isAccountExist = true; // So it's valid.
+            }
+            
+        }
+
+        if(isAccountExist){
+            res.sendFile(__dirname + '/chat.html');
+        }
+        else{
+            res.sendFile(__dirname + '/login.html');
+        }
+    });
+    
+
+
 });
+
+
+// Endpoint to give him the list of user.
 
 
 
 
 io.on('connection', function(socket){
+    var isUserAlreadyExist = false;
+
     console.debug("A user just connected", socket.id);
     
 
@@ -187,22 +223,51 @@ io.on('connection', function(socket){
 
 
         listUser[socket.id] = username;
+        listUserPrivate[username] = socket.id; // For private message -> More simple to do that.
 
         console.debug('User connected');
 
         io.emit('user connected', username); // Everyone will be inform that a new user just connected.
+
+        listUsername.forEach(function(u, index){
+            if(u === username){
+                isUserAlreadyExist = true;
+            }
+
+        });
+        if(!isUserAlreadyExist){
+            listUsername.push(username);
+        }
+
+
+        io.emit('user list', listUsername);
+
 
     });
 
     socket.on('send message', (msg) =>{ // We emit to everyone the message from the user.
         console.debug(msg, listUser[socket.id]); // OH !
 
+    
         var messageObject = {
             message : msg,
             user : listUser[socket.id]
         }
 
+       
         io.emit('message from user', messageObject);
+    });
+
+
+    socket.on('private message',(messagePrivateObject) =>{
+        console.debug(`Sending a private message from ${messagePrivateObject.usernameFrom} to ${messagePrivateObject.usernameTo} message : ${messagePrivateObject.message}`);
+
+        var messageObject = {
+            message : messagePrivateObject.message,
+            user : listUser[socket.id]
+        }
+
+        socket.to(listUserPrivate[messagePrivateObject.usernameTo]).emit('private message', messageObject);
     });
 
     socket.on('disconnect', function(){
@@ -213,8 +278,11 @@ io.on('connection', function(socket){
 });
 
 server.listen(8080, function(){
-    console.log('Listening on port 8080');
+    console.debug('Listening on port 8080');
 });
+
+
+
 /* General function of the program. */
 
 
