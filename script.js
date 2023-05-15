@@ -255,19 +255,29 @@ io.on('connection', function(socket){
         }
 
        
-        io.emit('message from user', messageObject);
+        io.emit('message from user', messageObject); // To everyone
     });
 
 
     socket.on('private message',(messagePrivateObject) =>{
         console.debug(`Sending a private message from ${messagePrivateObject.usernameFrom} to ${messagePrivateObject.usernameTo} message : ${messagePrivateObject.message}`);
+        
 
         var messageObject = {
             message : messagePrivateObject.message,
-            user : listUser[socket.id]
+            user : listUser[socket.id],
+            channelId : messagePrivateObject.channelId
         }
 
-        socket.to(listUserPrivate[messagePrivateObject.usernameTo]).emit('private message', messageObject);
+        socket.emit('private message', messageObject); // We resend to yourself the message to see that one.
+        socket.to(listUserPrivate[messagePrivateObject.usernameTo]).emit('private message', messageObject); // For the destinataire.
+        
+    });
+
+    // We receive that someone want to pen a conversation with another one.
+
+    socket.on('start private chat', (privateChatObject) =>{
+        socket.to(listUserPrivate[privateChatObject.userTo]).emit('start private chat', privateChatObject);
     });
 
     socket.on('disconnect', function(){
