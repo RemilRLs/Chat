@@ -11,27 +11,28 @@ body {
     justify-content: center;
     align-items: center;
 
-    min-height: 100vh;
-    background-color: rgba(0, 132, 255, 0.562);
+    height: 100vh;
+    background: white;
+
+    background: linear-gradient(to left, #36d1dc, #5b86e5);
+
   }
   
 
 .chat{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width : 100%;
+    width : 100%; 
+    height: 100%;
 }
 
 /* Property of the chat. */
 
 .chat .square-chat{
     display: flex;
-
+    height: 100%;
     width: 80%;
-    height: 700px;
-
     background-color: white;
+    
 
     border-radius: 5px;
 
@@ -39,14 +40,28 @@ body {
 
 .chat .square-chat .private-message{
   width: 20%;
-  height: 100%;
 
   padding: 20px;
   
-  background-image: linear-gradient(to bottom right, #007dfa, #010101);
+  background: #424549
 
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
+
+}
+.chat .square-chat .list-user-div button{
+  color: #60656c;
+  background: none;
+  border: none;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.avatar-icon img{
+  width: 40px;
+  height: 40px;
+
+  margin-right: 15px;
 }
 
 /* Chat Message Display Property. */
@@ -54,7 +69,6 @@ body {
 .chat .square-chat .chat-general{
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   width: 80%;
 
   padding: 20px;
@@ -63,17 +77,57 @@ body {
 
 .chat .square-chat .chat-general .list-message{
   width: 100%;
-  height: 80%;
+
 
   display: flex;
   flex-direction: column;
   overflow-y: auto;
 }
 
+.chat .square-chat .chat-general .list-private-message{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.chat .square-chat .chat-general .list-private-messages{
+  width: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
 
+
+.chat .square-chat .chat-general .message-input {
+  margin-top: auto;
+}
+
+/* Property Chat Input. */
+
+.chat .square-chat .chat-general .message-input .chat-message{
+  width: 90%;
+  height: 45px;
+
+  resize: none;
+
+  padding: 12px;
+  margin-right: 20px;
+  border-radius: 15px;
+}
+.chat .square-chat .chat-general .message-input .send-message{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
 /* General Property Chat. */
 
 .message{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 5px;
 
 }
@@ -106,4 +160,30 @@ body {
 
 .hidden{
   display: none!important; /* I have to do this... I don't know where was the problem...*/
+}
+
+.send{
+  width: 25px;
+  height: 25px;
+}
+
+.send-message{
+  background: none;
+  border: none;
+
+  cursor: pointer;
+}
+
+.emoji-icon{
+  width: 35px;
+  height: 35px;
+
+  margin-left: 10px;
+}
+
+button{
+  background: none;
+  border: none;
+  
+  cursor: pointer;
 }

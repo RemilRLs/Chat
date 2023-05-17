@@ -18,11 +18,16 @@
 </head>
 
 <body>
-    <!-- Section choose avatar. -->
 
     <section class="choose-avatar center">
+
         <!-- Square Username. -->
         <div class="square-name active">
+            <div class="circle">
+                <div class = "img">
+                    <img src="img/cool.png" alt="Smiley">
+                </div>
+            </div>
             <div class="title-name center column">
                 <h2>Welcome to you !</h2>
                 <h4>Choose a name you like to interact with others peoples</h4>
@@ -68,5 +73,20 @@
                 </form>
             </div>
         </div>
+		
+		<div class="square-avatar hidden">
+            <div class="title-avatar center column">
+                <h4>Select your Avatar</h4>
+            </div>
+
+            <div class="list-avatar-square">
+                
+            </div>
+
+            <button class="submit-button cursor" onclick="avatarSubmit()">Submit</button>
+        </div>
+		
     </section>
+	
+	<script src="/socket.io/socket.io.js"></script>
 </body>

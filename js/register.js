@@ -1,7 +1,8 @@
 var user = { // Structure/Object of the user.
     username: '',
     password: '',
-    passwordConfirm: ''
+    passwordConfirm: '',
+    pathAvatar: ''
   };
 
 
@@ -12,7 +13,14 @@ var user = { // Structure/Object of the user.
   const passwordConfirmInput = document.querySelector('.confirmpassword');
   const usernameErrorMessage = document.querySelector('.error-username');
   const passwordErrorMessage = document.querySelector('.error-password');
+  const listAvatarDiv = document.querySelector('.list-avatar-square');
+  const avatarForm = document.querySelector('.square-avatar');
+  const socket = io();
   var isValidUsername = false;
+
+  var circleImage = document.querySelector('.circle img');
+
+
 
 
 // Function to check username form.
@@ -31,11 +39,15 @@ function usernameSubmit() {
     })
     .then(response => {
         if (!response.ok) { // If the username already exist.
+            usernameErrorMessage.innerHTML = ``;
             isValidUsername = false;
 
             usernameErrorMessage.style.display = 'block';
         
-            usernameErrorMessage.innerHTML += `<p>Username already taken, please retry...</p>`
+            usernameErrorMessage.innerHTML = `<p>Username already taken, please retry...</p>`
+
+            circleImage.src = 'img/sad.png';
+
 
             throw new Error(`HTTP error! status: ${response.status}`);
             
@@ -46,9 +58,10 @@ function usernameSubmit() {
             if(usernameInput.value.length > 0 && isValidUsername){ // We only want valid username.
                 usernameErrorMessage.style.display = 'none';
         
-        
+    
                 usernameForm.classList.remove('active');
-                passwordForm.classList.add('active'); // We go to the password form.
+                avatarForm.classList.add('active'); // We go to the avatar form.
+                avatarForm.classList.remove('hidden');
                 user.username = usernameInput.value;  // We get the username.
         
         
@@ -81,6 +94,8 @@ function usernameSubmit() {
 
 function passwordSubmit() {
 
+    console.log(`Avatar is ${localStorage.avatarSelected}`);
+
     passwordErrorMessage.innerHTML = ``; // We reset the innerHTML for the password.
 
     if (passwordInput.value != passwordConfirmInput.value){ // We only want valid password.
@@ -107,6 +122,7 @@ function passwordSubmit() {
 
         user.password = passwordInput.value; // We get the password.
         user.passwordConfirm = passwordInput.value; // We get the confirm password.
+        user.pathAvatar = localStorage.avatarSelected; // We get the avatar that the user selected.
         
     }
 
@@ -115,7 +131,7 @@ function passwordSubmit() {
 
 // Function to validate the information and send it to the server.
 function checkCredential(userObject){
-
+    
     if(userObject.username && userObject.password){ // Validation of the credential.
         console.debug(`Validation of the credential. Sending information to the server...`);
 
@@ -137,4 +153,54 @@ function checkCredential(userObject){
             console.error('Error:', error);
         });
     }
+}
+
+socket.on('get file', (listFilePath) =>{
+    listAvatarDiv.innerHTML = ``;
+    listFilePath.forEach(function(fileName, index){
+        listAvatarDiv.innerHTML += `<button class="avatar-btn" onclick=selectAvatar('${fileName}')> <img src=/ressources/avatars/${fileName}></button> `;
+    });
+});
+
+function selectAvatar(fileName){
+    var avatarButtons = document.querySelectorAll('.avatar-btn img');
+    avatarButtons.forEach(function(imgElement){ 
+        if(imgElement.src.includes(fileName)){ // We return true if the src of the image contain the fileName that the user selected.
+            imgElement.style.border = "solid medium";
+            imgElement.style.borderRadius = "100%";
+
+            localStorage.avatarSelected = fileName;
+            console.log(`Avatar selected : ${fileName}`);
+        }
+        else{
+            imgElement.style.border = "none";
+
+        }
+    });
+
+}
+
+function avatarSubmit(){
+    fetch('http://localhost:8080/avatar', {
+        method: 'POST',
+        headers:{
+            'Content-Type' : 'application/json',
+        },
+        body : JSON.stringify({fileName : localStorage.avatarSelected}),
+    })
+    .then(response =>{
+        if(!response.ok){
+            console.log("Cannot send avatar to the server, please retry...");
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return response.json;
+    })
+    .then(data =>{
+        console.log(`Success : ${data}`);
+
+        avatarForm.classList.remove('active');
+        avatarForm.classList.add('hidden');
+        passwordForm.classList.add('active');
+    });
 }

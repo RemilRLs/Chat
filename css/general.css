@@ -21,3 +21,12 @@
 label{
     margin-bottom: 20px;
 }
+
+.icon{
+    background: none;
+    border: none;
+}
+
+.hidden{
+    display: none;
+}

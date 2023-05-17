@@ -1,3 +1,14 @@
 - Vérification user credential côté client ainsi que serveur (on évite que le client ne modifie les scripts de son côté)
 - Hashage des mots de passe à l'aide de bcrypt.
 - Vérification d'usurpation d'identité à l'aide du pseudo et du hash du password de celui-ci.
+- Vérification d'usurpation d'identité à l'aide du pseudo et du hash du password de celui-ci.
+- Message privé accès channel.
+- Historique des messages que ce soit privé ou public.
+- Emoticone qui réagisse à une erreur dans le pseudonyme, password.
+
+
+
+
+Précision :
+
+Ne pas utiliser nodemon car vu que l'on écrit dans emssage_database.json le serveur est reload car il pense que c'est un changement et donc les socket sont réactualisé.

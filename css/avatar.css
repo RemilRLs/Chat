@@ -14,29 +14,47 @@ body{
 
 }
 
+img{
+    position: relative;
+    max-width: 100%;
+    width: 90%;
+    height: 90%;
+
+}
+
+.circle {
+    position: absolute;
+    top: -25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 145px;
+    height: 145px;
+    background: white;
+    border-radius: 50%;
+}
+
 .choose-avatar{
     width: 100%;
     height: 100%;
-    
-
-    background-image: linear-gradient(to bottom right, #007dfa, #010101);
-
+    background: linear-gradient(to left, #36d1dc, #5b86e5);
 }
 
 /* Property Design for Name. */
 
 .choose-avatar .square-name{
 
-    width: 50%;
-    height: 400px;
-
+    width: 60%;
+    height: 50%;
     background-color: rgb(255, 255, 255);
-
     border-radius: 20px;
-
     margin-top: 50px;
-
     display: none;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 .choose-avatar .square-name.active{
@@ -50,13 +68,16 @@ body{
 
 .choose-avatar .square-name .title-name h2{
     margin-bottom: 30px;
-    font-size: 18px;
+    font-size: 20px;
+
     
     color: rgb(64, 64, 64);
 }
 
 .choose-avatar .square-name .title-name h4{
-    font-size: 20px;
+    font-size: 22px;
+    color: rgb(70, 70, 70);
+
 }
 
 /* Property Design for Form Name. */
@@ -69,23 +90,42 @@ body{
     width: 150px;
     height: 35px;
 
+
     text-align: center;
-    border: none;
-    border-radius: 10px;
+
+    border: 2px solid #111;
+    border-radius: 8px;
 
     color: white;
     font-weight: bold;
-    
+
     background-color: rgb(0, 132, 255);
+    cursor: pointer;
+}
+
+.square-name .choose-name .submit .submit-button:hover{
+    background-color: rgb(0, 132, 255, 0.8);
 }
 
 .square-name .choose-name .name{
-    width: 250px;
-    height: 35px;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid gray;
+    outline: 0;
+    font-size: 1.3rem;
+    color:  rgb(64, 64, 64);
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
 
-    padding-left: 5px;
+}
 
-    border-radius: 5px;
+.square-name .choose-name .name:focus{
+    border-bottom: 2px solid transparent;
+    background: linear-gradient(to left, #36d1dc, #5b86e5);
+    background-position: bottom;
+    background-size: 100% 3px;
+    background-repeat: no-repeat;
 
 }
 
@@ -93,15 +133,15 @@ body{
 /* Property Design Password. */
 
 .square-password{
-    width: 50%;
-    height: 400px;
+    width: 60%;
+    height: 50%;
 
     background-color: rgb(255, 255, 255);
 
     border-radius: 20px;
 
     margin-top: 50px;
-
+    padding: 20px;
     display: none;
 }
 
@@ -110,18 +150,46 @@ body{
     
 }
 
-.square-password .password-form{
-    margin-top: 55px;
+.square-password .password{
+    margin-bottom: 15px;
 }
 
-.square-password .password-form input{
-    width: 250px;
+.square-password input[type="password"] {
+    padding: 10px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    transition: box-shadow 0.3s ease;
+}
+
+.square-password input[type="password"]:focus {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.square-password .submit .submit-button {
+    width: 150px;
     height: 35px;
 
-    padding-left: 5px;
-    margin-top: 25px;
-    border-radius: 5px;
+
+    text-align: center;
+
+    border: 2px solid #111;
+    border-radius: 8px;
+
+    color: white;
+    font-weight: bold;
+
+    background-color: rgb(0, 132, 255);
+    cursor: pointer;
 }
+
+.square-password .submit .submit-button:hover {
+    background-color: rgb(0, 132, 255, 0.8);
+}
+
 
 .choose-avatar .square-password .title-name h4{
     margin-bottom: 30px;
@@ -130,6 +198,34 @@ body{
     margin-top: 50px;
     
     color: rgb(64, 64, 64);
+}
+
+
+/* Avatar Property. */
+
+.square-avatar {
+    width: 30%;
+    height: 50%;
+
+    background-color: white;
+}
+
+.square-avatar  .list-avatar-square{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.square-avatar  .list-avatar-square img{
+    width: 50px;
+    height: 50px;
+}
+
+.square-avatar  .list-avatar-square .avatar-btn{
+    cursor: pointer;
+    background: none;
+    border: none;
 }
 
 /* Erreur handle. */
@@ -142,4 +238,63 @@ body{
 .error-username{
     color: red;
     display: none;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1112px){}
+@media (max-width: 1045px){}
+@media (max-width: 900px){}
+@media (max-width: 400px) {
+    body {
+        height: 100vh;
+    }
+
+    img {
+        width: 70%;
+    }
+
+    .circle {
+        top: 0%;
+        left: 50%;
+        width: 60px;
+        height: 60px;
+    }
+
+    .choose-avatar .square-name,
+    .choose-avatar .square-password {
+        width: 95%;
+        height: 90%;
+        margin-top: 30px;
+    }
+
+    .choose-avatar .square-name .title-name h2 {
+        font-size: 18px;
+    }
+
+    .choose-avatar .square-name .title-name h4,
+    .choose-avatar .square-password .title-name h4 {
+        font-size: 16px;
+        margin-top: 40px;
+    }
+
+    .square-name .choose-name .submit .submit-button {
+        width: 130px;
+        height: 30px;
+        font-size: 12px;
+    }
+
+    .square-name .choose-name .name {
+        font-size: 1rem;
+    }
+
+    .square-password .password-form input {
+        width: 200px;
+        height: 30px;
+        font-size: 12px;
+    }
+
+    .error-password,
+    .error-username {
+        font-size: 12px;
+    }
 }

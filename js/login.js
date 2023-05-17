@@ -1,6 +1,7 @@
 const errorMessage = document.querySelector('.error-message');
 const username = document.querySelector('.input-username');
 const password = document.querySelector('.input-password');
+const socket = io();
 
 // User Credential Object.
 
@@ -73,6 +74,8 @@ function credentialSubmit(){
     return response.json()
   })
   .then(data => { // Validation
+    console.log(`The username is ${data.username}`);
+    //socket.emit('enter', data.username);
     console.log('Success:', data);
     window.location.href = data['redirectUrl']; // Redirection to the chat.html page.
   });

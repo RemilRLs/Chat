@@ -29,14 +29,19 @@
                         <!-- Message from all the users will be there. -->
                     </div>
 
-                    <div class="list-private-message hidden">
+                    <div class="list-private-messages">
                         <!-- Private chat messages -->
-                      </div>
+                    </div>
                     <div class="message-input">
                         <form class="send-message">
-                            <textarea class="chat-message" rows="4" placeholder="Type something"></textarea>
-                            <button type="button" class="btn-public" onclick="sendMessage()">Send</button>
-                            <button type="button" class="btn-private hidden" onclick="sendPrivateMessage()">Send</button>
+                            <textarea class="chat-message" rows="4" placeholder="Send a message into the public chat..."></textarea>
+                            <button type="button" class="btn-public send-message" onclick="sendMessage()"><img src="/ressources/icons/paper-plane.png" class="icon send"></button>
+                            <button type="button" class="btn-private hidden" onclick="sendPrivateMessage()"><img src="/ressources/icons/paper-plane.png" class="icon send"></button>
+                            <button type="button" class="button-emoji"><img src="/ressources/emojis/cool.png" class="emoji-icon icon"></button>
+                            
+                            <div class="emoji-list" style="display: none;">
+                                😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎
+                            </div>
                         </form>
                     </div>
                 </div>

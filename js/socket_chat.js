@@ -18,7 +18,7 @@ const chat = document.querySelector('.chat-general');
 const listMessage = document.querySelector('.list-message');
 const chatMessage = document.querySelector('.chat-message');
 const listUserDiv = document.querySelector('.list-user-div');
-const listMessagePrivate = document.querySelector('.list-private-message');
+const listMessagePrivate = document.querySelector('.list-private-messages');
 const buttonPublic = document.querySelector('.btn-public'); // Public Send.
 const buttonPrivate = document.querySelector('.btn-private'); // Private Send.
 
@@ -28,6 +28,8 @@ const buttonPrivate = document.querySelector('.btn-private'); // Private Send.
 const socket = io();
 
 socket.emit('enter', username);
+
+
 
 
 // We inform everyone that a new user just connect.
@@ -61,16 +63,17 @@ socket.on('private message', (messageObject) =>{
     console.log(chatPrivateSelect);
 
 
-    createMessage(messageObject, username, chatPrivateSelect);
+    createMessage(messageObject, username, chatPrivateSelect, messageObject.avatar);
 });
 
 // We receive here all the messages from other users.
 
 socket.on('message from user', (messageObject) =>{
     var username = urlParams.get('username');
-    localStorage.username = username;           
+    localStorage.username = username;
+    console.log(`AVATAR : ${messageObject.avatar}`);
 
-    createMessage(messageObject, localStorage.username, listMessage);
+    createMessage(messageObject, localStorage.username, listMessage, messageObject.avatar);
 });
 
 socket.on('start private chat', (privateChatObject) =>{
@@ -82,6 +85,20 @@ socket.on('start private chat', (privateChatObject) =>{
     createPrivateChannel(privateChatObject.userFrom, privateChatObject.userTo);
 });
 
+// Display history message  socket.
+
+socket.on('message list', (messageObject) =>{
+    removeMessage();
+    console.log("Je passe ici");
+
+    var username = urlParams.get('username');
+    localStorage.username = username;
+    
+    messageObject.forEach(function(messageObj, index){
+
+        createMessage(messageObj, username, listMessage, messageObj.avatar);
+    });
+});
 // Function to send a message to everyone.
 
 function sendMessage(){
@@ -136,21 +153,27 @@ function sendPrivateMessage(){
 
 // Function to create the message.
 
-function createMessage(messageObj, username, targetDiv){
+function createMessage(messageObj, username, targetDiv, avatarName){
+    console.log(avatarName);
     const messageDiv = document.createElement('div');
     
     messageDiv.classList.add('message');
-    messageDiv.innerHTML = `<p> ${messageObj.user} : ${messageObj.message} </p>`;
-
-    if(username == messageObj.user){ // We want that if the user itself send the message is message is going to appear in blue if not it will appear in green.
-        messageDiv.classList.add('blue')
+    messageDiv.innerHTML += `<div class='avatar-icon'><img src="/ressources/avatars/${avatarName}"></div>`
+    
+    let p = document.createElement('p');
+    p.innerHTML = `${messageObj.user} : ${messageObj.message}`;
+    
+    if(username == messageObj.user){
+        p.classList.add('blue');
         messageDiv.classList.add('message', 'message-right');
     }
     else{
-        messageDiv.classList.add('green');
+        p.classList.add('green');
         messageDiv.classList.add('message', 'message-left');
-       
     }
+    
+    messageDiv.appendChild(p);
+    
 
     targetDiv.appendChild(messageDiv);
     targetDiv.scrollTop = targetDiv.scrollHeight;
@@ -173,7 +196,7 @@ function createPrivateChannel(userFrom, userTo){
     }
 
 
-    chat.appendChild(chatPrivate);
+    listMessagePrivate.appendChild(chatPrivate);
 }
 
 // Function to show the only channel that we just selected.
@@ -196,4 +219,10 @@ function showPrivateChannel(userFrom, userTo){
     channelSelect.classList.remove('hidden');
 
     return channelSelect; // We get the channel that the user just selected.
+}
+
+// Function to remove every message from a div.
+
+function removeMessage(){
+    listMessage.innerHTML = ``;
 }
