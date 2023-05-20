@@ -5,6 +5,7 @@
 - Message privé accès channel.
 - Historique des messages que ce soit privé ou public.
 - Emoticone qui réagisse à une erreur dans le pseudonyme, password.
+- Les utilisateurs peuvent utiliser des émojis.
 
 
 

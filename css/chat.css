@@ -39,6 +39,11 @@ body {
 }
 
 .chat .square-chat .private-message{
+
+  align-items: center;
+  justify-content:  center;
+  text-align: center;
+
   width: 20%;
 
   padding: 20px;
@@ -46,6 +51,18 @@ body {
   background: #424549
 
 
+}
+
+.chat .square-chat .private-message p {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #666b6e;
+
+  font-size: 11px;
+}
+
+.chat .square-chat .private-message p:hover{
+  color:white;
 }
 .chat .square-chat .list-user-div button{
   color: #60656c;

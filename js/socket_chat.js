@@ -177,6 +177,7 @@ function createMessage(messageObj, username, targetDiv, avatarName){
 
     targetDiv.appendChild(messageDiv);
     targetDiv.scrollTop = targetDiv.scrollHeight;
+    chatMessage.value = ``; // We reset the input chat.
 }
 
 // Create a channel for talk in private with your friends.
