@@ -21,8 +21,7 @@ var avatarSelected = '';
 
 app.use(compression()); // Reduce frame size.
 
-// Use static server middleware
-app.use(serve_static(__dirname));
+
 
 // Middleware to display request parameters and path
 app.use(function(req, res, next) {
@@ -41,6 +40,14 @@ app.use(express.urlencoded({ extended: true })); // Same.
 app.get('/register', (req, res) =>{
     res.sendFile(__dirname + '/index.html');
 });
+
+app.get('/', (req, res) =>{
+    res.sendFile(__dirname + '/login.html');
+});
+
+// Use static server middleware
+app.use(serve_static(__dirname));
+
 
 app.post('/', async function(req, res) { // We get the form username.
     const username = req.body.username; // We get the username of the user.
@@ -240,7 +247,9 @@ io.on('connection', function(socket){
 
     // We create a socket for the user.
     socket.on('enter', (username) =>{
-    
+        
+
+        
 
         listUser[socket.id] = username;
         listUserPrivate[username] = socket.id; // For private message -> More simple to do that.
@@ -250,13 +259,32 @@ io.on('connection', function(socket){
         io.emit('user connected', username); // Everyone will be inform that a new user just connected.
 
         listUsername.forEach(function(u, index){
-            if(u === username){
+            if(u.username === username){
                 isUserAlreadyExist = true;
             }
 
         });
         if(!isUserAlreadyExist){
-            listUsername.push(username);
+            var objectUser = {
+                username : username,
+                avatar : ''
+            }
+
+            fs.readFile(__dirname + '/database/user_database.json', (err, user) =>{
+                if(err){
+                    console.debug(`Cannot read the database message, please retry...`);  
+                }
+
+                var userListDatabase = JSON.parse(user);
+
+                userListDatabase.forEach(function(user){
+                    if(user.username === objectUser.username){
+                        objectUser.avatar = user.avatar;
+                    }
+                });
+            });
+
+            listUsername.push(objectUser);
         }
         
 
@@ -279,13 +307,18 @@ io.on('connection', function(socket){
 
     socket.on('send message', (msg) =>{ // We emit to everyone the message from the user.
         console.debug(msg, listUser[socket.id]); // OH !
+        var currentdate = new Date();  // To get the date.
         
-
     
         var messageObject = {
             message : msg,
             user : listUser[socket.id],
-            avatar : ''
+            avatar : '',
+            date : currentdate.getDate(),
+            month : currentdate.getMonth() + 1,
+            year : currentdate.getFullYear(),
+            hour : currentdate.getHours(),
+            minute : currentdate.getMinutes(),
         }
 
         // We add the message to the database.
@@ -339,6 +372,7 @@ io.on('connection', function(socket){
 
 
     socket.on('private message',(messagePrivateObject) =>{
+        var currentdate = new Date(); 
         console.debug(`Sending a private message from ${messagePrivateObject.usernameFrom} to ${messagePrivateObject.usernameTo} message : ${messagePrivateObject.message}`);
         
 
@@ -346,8 +380,9 @@ io.on('connection', function(socket){
             message : messagePrivateObject.message,
             user : listUser[socket.id],
             channelId : messagePrivateObject.channelId,
-            avatar : ``
-
+            avatar : ``,
+            date : currentdate.getDate,
+            hour : currentdate.getHours
         }
 
         const userData = fs.readFileSync(__dirname + '/database/user_database.json');
@@ -356,7 +391,6 @@ io.on('connection', function(socket){
         userList.forEach(function(user, index){
             if(user.username === messageObject.user){
                 messageObject.avatar = user.avatar; // AAAA It was in asynchrone.
-                console.log(`Avatar iiiiiiis : ${messageObject.avatar}`);
             }
         });
 

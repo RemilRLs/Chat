@@ -7,9 +7,7 @@
   
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
 
     height: 100vh;
     background: white;
@@ -19,36 +17,30 @@ body {
   }
   
 
-.chat{
+  .chat {
     display: flex;
-    width : 100%; 
+    width: 100%;
     height: 100%;
 }
-
 /* Property of the chat. */
 
-.chat .square-chat{
-    display: flex;
-    height: 100%;
-    width: 80%;
-    background-color: white;
-    
+.chat .square-chat {
+  display: flex;
+  height: 100%;
+  width: 100%; 
 
-    border-radius: 5px;
-
+  background-color: white;
 }
 
 .chat .square-chat .private-message{
 
-  align-items: center;
-  justify-content:  center;
-  text-align: center;
 
-  width: 20%;
+
+  width: 17%;
 
   padding: 20px;
   
-  background: #424549
+  background: #2c2f33; 
 
 
 }
@@ -59,20 +51,84 @@ body {
   color: #666b6e;
 
   font-size: 11px;
+
+  margin-bottom: 10px;
 }
 
 .chat .square-chat .private-message p:hover{
   color:white;
 }
-.chat .square-chat .list-user-div button{
+
+.chat .square-chat .list-user-div{
+  width: 90%;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 95%; 
+}
+.chat .square-chat .list-user-div  .user-div{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+}
+
+
+.chat .square-chat .list-user-div .user-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+
+  margin-top: 10px;
   color: #60656c;
   background: none;
   border: none;
-
   font-weight: bold;
-
   cursor: pointer;
 }
+
+.chat .square-chat .return-public-chat{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.chat .square-chat .return-public-chat button{
+  cursor: pointer;
+
+  background-color: white;
+  width: 80%;
+  height: 40px;
+  border-radius: 5px;
+
+  background: linear-gradient(to left, #36d1dc, #5b86e5);
+  color: rgb(36, 36, 36);
+  font-weight: bold;
+
+
+}
+
+.chat .square-chat .list-user-div .user-button .username{
+  color: rgb(141, 141, 141);
+}
+
+.chat .square-chat .list-user-div .user-button:hover{
+  background-color: rgba(185, 185, 185, 0.13);
+
+  border-radius: 5px;
+}
+
+.chat .square-chat  .list-user-div .user-button img {
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
+}
+
+
 
 .avatar-icon img{
   width: 40px;
@@ -85,6 +141,7 @@ body {
 
 .chat .square-chat .chat-general{
   display: flex;
+  
   flex-direction: column;
   width: 80%;
 
@@ -140,6 +197,22 @@ body {
 
 }
 /* General Property Chat. */
+
+
+.chat-general .user-from{
+  display: flex;
+}
+
+.chat-general span{
+  color: white;
+  font-weight: bold;
+}
+
+.chat-general span p {
+  color: black;
+
+  font-weight: 0;
+}
 
 .message{
   display: flex;

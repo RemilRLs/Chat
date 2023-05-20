@@ -41,7 +41,7 @@ socket.on('user connected' , (user)  =>{ // We receive the information. That wor
         listUserDiv.innerHTML = ""; 
         userList.forEach(function(u, index){
             console.log(`User : ${u}`);
-            listUserDiv.innerHTML += `<button index="${index}" onclick='selectUserMessagePrivate(${index}, "${urlParams.get('username')}", "${u}")'>${u}</button>`;
+            listUserDiv.innerHTML += `<div class="user-div"><button class="user-button" index="${index}" onclick='selectUserMessagePrivate(${index}, "${urlParams.get('username')}", "${u.username}")'><img src="/ressources/avatars/${u.avatar}"><span class="username">${u.username}</span></button></div>`;
 
         });
 
@@ -79,7 +79,6 @@ socket.on('message from user', (messageObject) =>{
 socket.on('start private chat', (privateChatObject) =>{
     channelId = privateChatObject.channelId;
     chatDivSelected = channelId;
-
     console.log(chatDivSelected);
 
     createPrivateChannel(privateChatObject.userFrom, privateChatObject.userTo);
@@ -89,7 +88,6 @@ socket.on('start private chat', (privateChatObject) =>{
 
 socket.on('message list', (messageObject) =>{
     removeMessage();
-    console.log("Je passe ici");
 
     var username = urlParams.get('username');
     localStorage.username = username;
@@ -112,6 +110,15 @@ function selectUserMessagePrivate(index, userFrom, userTo){
     userObjectPrivateMessage.usernameFrom = userFrom;
     userObjectPrivateMessage.usernameTo = userTo;
 
+    if(userTo === userFrom){
+        chatMessage.placeholder = `Send a message to yourself (why not)`;
+    }
+    else{
+        chatMessage.placeholder = `Send a message to ${userTo}`;
+    }
+    
+
+    
     console.log(`${userFrom} to ${userTo}`);
 
     // Switch mode.
@@ -146,7 +153,7 @@ function sendPrivateMessage(){
 
     userObjectPrivateMessage.message = chatMessage.value;
     userObjectPrivateMessage.channelId = channelId;
-
+    
     console.log(`${userObjectPrivateMessage.usernameFrom} to ${userObjectPrivateMessage.usernameTo}`);
     socket.emit('private message', userObjectPrivateMessage);
 }
@@ -156,18 +163,26 @@ function sendPrivateMessage(){
 function createMessage(messageObj, username, targetDiv, avatarName){
     console.log(avatarName);
     const messageDiv = document.createElement('div');
+    var currentdate = new Date(); 
     
     messageDiv.classList.add('message');
     messageDiv.innerHTML += `<div class='avatar-icon'><img src="/ressources/avatars/${avatarName}"></div>`
     
+
+
     let p = document.createElement('p');
-    p.innerHTML = `${messageObj.user} : ${messageObj.message}`;
+
+    if(currentdate.getDate() == messageObj.date){
+        p.innerHTML = `<span class="user-from">${messageObj.user}  &#160 <p>Today at ${messageObj.hour}:${messageObj.minute}</p></span>  <p class="message-is">${messageObj.message}</p>`;
+    }
+
     
-    if(username == messageObj.user){
+    
+    if(username == messageObj.user){ // If it's me that send the message the message will be on the right.
         p.classList.add('blue');
         messageDiv.classList.add('message', 'message-right');
     }
-    else{
+    else{ // Not me, on the left.
         p.classList.add('green');
         messageDiv.classList.add('message', 'message-left');
     }

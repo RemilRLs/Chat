@@ -31,3 +31,20 @@ document.addEventListener('DOMContentLoaded', (event) => { // We need to know wh
         });
     });
 });
+
+// Function to display the public chat.
+
+function displayPublicChat(){
+    listChannelPrivate = document.querySelectorAll('.list-private-message');
+    publicChat = document.querySelector('.list-message');
+    
+    chatMessage.placeholder = "Send a message into the public chat...";
+
+
+
+    listChannelPrivate.forEach(function(channel, index){ 
+        channel.classList.add('hidden');
+    });
+
+    publicChat.classList.remove('hidden');
+}
