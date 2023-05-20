@@ -11,9 +11,31 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: linear-gradient(to bottom right, #007dfa, #010101);
+  background: linear-gradient(to left, #36d1dc, #5b86e5);
 }
 
+img{
+  position: relative;
+  max-width: 100%;
+  width: 90%;
+  height: 90%;
+  left: 5%;
+
+}
+
+.circle {
+  position: absolute;
+  top: -25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 145px;
+  height: 145px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .logo {
   display: flex;
   justify-content: center;
@@ -27,24 +49,23 @@ body {
 }
 
 .wrapper{
-  position: relative;
   width: 30%;
-  height: 585px;
+  height: auto;
   background: #E2E2E2;
   padding: 25px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(255,255,255,.5);
   display: flex;
-
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  position: relative;
 }
 
 
 .wrapper .form-box {
   width: 100%;
   padding: 40px;
+
 }
 
 .wrapper .form-box.login {
@@ -111,30 +132,6 @@ label{
   padding: 0 35px 0 5px;
 }
 
-.remember-me {
-  font-size: .9em;
-  color: #162938;
-  font-weight: 500;
-  margin: -15px 0 15px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.remember-me label input{
-  accent-color: #162938;
-  margin-right: 3px;
-}
-
-.remember-me a {
-  text-decoration: none;
-  color: darkcyan;
-  font-weight: 600;
-}
-
-.remember-me a:hover {
-  text-decoration: underline;
-}
-
 .btn {
 
   margin-top: 50px;
@@ -169,3 +166,92 @@ label{
   text-decoration: underline;
 }
 
+.error-message {
+  color: red;
+  font-size: 15px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+
+}
+
+
+@media (max-width: 1322px){
+    .wrapper{
+        width: 40%;
+        height: auto;
+    }
+
+  .error-message {
+    font-size: 12px;
+  }
+
+}
+@media (max-width: 1045px){
+    .wrapper{
+        width: 50%;
+    }
+}
+@media (max-width: 900px){
+    .wrapper{
+        width: 60%;
+    }
+}
+@media (max-width: 400px) {
+
+    img {
+      width: 90%;
+      margin-top: 5px;
+    }
+
+    .circle {
+      top: 0%;
+      left: 50%;
+      width: 60px;
+      height: 60px;
+    }
+
+    .wrapper {
+        width: 90%;
+        margin-top: 10px;
+    }
+
+    .wrapper .form-box {
+      padding: 5px;
+    }
+
+    .wrapper .form-box h2 {
+      font-size: 1.5em;
+    }
+
+    .input-box label {
+      font-size: .8em;
+    }
+
+    .input-box input {
+      font-size: .8em;
+    }
+
+    .btn {
+      margin-top: 20px;
+      font-size: .8em;
+    }
+
+    .login-register {
+      font-size: .8em;
+    }
+
+    .login-register a {
+      font-size: .8em;
+    }
+
+    .logo img {
+      max-width: 80%;
+    }
+  .error-message {
+    font-size: 8px;
+  }
+
+}

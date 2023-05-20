@@ -11,7 +11,6 @@ body{
     min-height: 100vh;
     width: 100%;
     height: 721px;
-
 }
 
 img{
@@ -27,13 +26,13 @@ img{
     top: -25%;
     left: 50%;
     transform: translate(-50%, -50%);
-    justify-content: center;
-    align-items: center;
-    display: flex;
     width: 145px;
     height: 145px;
     background: white;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .choose-avatar{
@@ -133,16 +132,16 @@ img{
 /* Property Design Password. */
 
 .square-password{
+
     width: 60%;
     height: 50%;
-
     background-color: rgb(255, 255, 255);
-
     border-radius: 20px;
-
     margin-top: 50px;
-    padding: 20px;
     display: none;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 .square-password.active{
@@ -204,10 +203,17 @@ img{
 /* Avatar Property. */
 
 .square-avatar {
-    width: 30%;
-    height: 50%;
-
+    width: 60%;
+    height: auto;
+    padding: 40px;
     background-color: white;
+    border-radius: 10px;
+}
+
+.square-avatar .title-avatar h4 {
+    margin-bottom: 40px;
+    font-size: 18px;
+    color: rgb(64, 64, 64);
 }
 
 .square-avatar  .list-avatar-square{
@@ -218,14 +224,50 @@ img{
 }
 
 .square-avatar  .list-avatar-square img{
-    width: 50px;
-    height: 50px;
+    width: 70%;
+
+    height: 70%;
 }
 
 .square-avatar  .list-avatar-square .avatar-btn{
     cursor: pointer;
     background: none;
     border: none;
+}
+
+.square-avatar  .list-avatar-square .avatar-btn img{
+    margin-right: 30px;
+}
+
+.square-avatar  .list-avatar-square .avatar-btn:hover{
+    transform: scale(1.2);
+}
+
+.square-avatar  .list-avatar-square .avatar-btn:focus{
+    outline: none;
+}
+
+.square-avatar .submit-button {
+    margin-top: 50px;
+
+    width: 150px;
+    height: 35px;
+
+
+    text-align: center;
+
+    border: 2px solid #111;
+    border-radius: 8px;
+
+    color: white;
+    font-weight: bold;
+
+    background-color: rgb(0, 132, 255);
+    cursor: pointer;
+}
+
+.square-avatar .submit-button:hover {
+    background-color: rgb(0, 132, 255, 0.8);
 }
 
 /* Erreur handle. */
@@ -243,7 +285,16 @@ img{
 /* Media queries for responsiveness */
 @media (max-width: 1112px){}
 @media (max-width: 1045px){}
-@media (max-width: 900px){}
+@media (max-width: 900px){
+    .square-avatar .list-avatar-square img {
+        width: 90%;
+        height: 90%;
+    }
+
+    .square-avatar .list-avatar-square .avatar-btn img {
+        margin-right: 10px;
+    }
+}
 @media (max-width: 400px) {
     body {
         height: 100vh;
@@ -292,6 +343,41 @@ img{
         height: 30px;
         font-size: 12px;
     }
+
+    .square-avatar {
+        width: 95%;
+        height: auto;
+        padding: 40px;
+        background-color: white;
+        border-radius: 10px;
+    }
+
+    .square-avatar .submit-button {
+        width: 130px;
+        height: 30px;
+        font-size: 12px;
+    }
+
+    .square-avatar .title-avatar h4 {
+        font-size: 12px;
+    }
+
+    .square-avatar .list-avatar-square img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .square-avatar .list-avatar-square .avatar-btn img {
+        margin-right: 10px;
+    }
+
+
+    .square-avatar .list-avatar-square .avatar-btn {
+        margin-bottom: 20px;
+    }
+
+
+
 
     .error-password,
     .error-username {

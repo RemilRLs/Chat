@@ -9,6 +9,8 @@ var credentialUser = {
   username: '',
   password: ''
 }
+var circleImage = document.querySelector('.circle img');
+
 
 
 // Listener.
@@ -67,7 +69,8 @@ function credentialSubmit(){
   })
   .then(response => { 
     if(!response.ok){
-      errorMessage.innerHTML += `Invalid username or password...`
+      errorMessage.innerHTML += ` ⚠️ Invalid username or password...`
+      circleImage.src = 'img/sad.png';
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 

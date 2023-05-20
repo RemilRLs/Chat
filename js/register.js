@@ -101,29 +101,34 @@ function passwordSubmit() {
     if (passwordInput.value != passwordConfirmInput.value){ // We only want valid password.
         passwordErrorMessage.style.display = 'block';
         passwordErrorMessage.innerHTML += `Password didn't match, please retry...`
+        document.getElementById('avatar-image').setAttribute('src', 'img/sad.png');
 
     }
     else if((passwordInput.value.length < 8 || passwordConfirmInput.value.length < 8) && (passwordConfirmInput.value != passwordInput.value)){ // Password to short and didn't match.
-        
         passwordErrorMessage.style.display = 'block';
         passwordErrorMessage.innerHTML += `Password must be at least 8 characters long. <br> Password didn't match, please retry...<br>`
+        document.getElementById('avatar-image').setAttribute('src', 'img/sad.png');
+
     }
     else if(passwordInput.value.length < 8 || passwordConfirmInput.value.length < 8){
         passwordErrorMessage.style.display = 'block';
         passwordErrorMessage.innerHTML += `Password must be at least 8 characters long. <br>`
+        document.getElementById('avatar-image').setAttribute('src', 'img/sad.png');
+
     }
     else if(!/\d/.test(passwordInput.value)){ // Password with no number.
         passwordErrorMessage.style.display = 'block';
         passwordErrorMessage.innerHTML += `Password must contain at least one number.<br>`
+        document.getElementById('avatar-image').setAttribute('src', 'img/sad.png');
+
     }
     else{ // Password match / validation.
-        
+        document.getElementById('avatar-image').setAttribute('src', 'img/cool.png');
         passwordErrorMessage.style.display = 'none';
 
         user.password = passwordInput.value; // We get the password.
         user.passwordConfirm = passwordInput.value; // We get the confirm password.
         user.pathAvatar = localStorage.avatarSelected; // We get the avatar that the user selected.
-        
     }
 
     checkCredential(user); // We check the credential.
