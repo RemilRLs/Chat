@@ -21,13 +21,19 @@
         <section class="chat">
             <div class="square-chat">
                 <div class="private-message">
-                    <p>Private messages</p>
+                    <p class="text-screen">Private messages</p>
+                    <p class="text-mobile" style="display: none;">PM</p> 
                     <div class="wrapper">
                         <div class="list-user-div column">
                         </div>
     
                         <div class="return-public-chat">
-                            <button type="button" onclick="displayPublicChat()"class="button-public">Chat public</button>
+                            <button type="button" onclick="displayPublicChat()"class="button-public">
+                                <span>Chat public</span>
+                                
+                                <img class="button-image-public" src="/ressources/icons/annuler.png" style="display: none;" />
+                            </button>
+                            
                         </div>
                     </div>
 

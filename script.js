@@ -260,7 +260,10 @@ io.on('connection', function(socket){
 
         listUsername.forEach(function(u, index){
             if(u.username === username){
+
                 isUserAlreadyExist = true;
+
+
             }
 
         });
@@ -280,6 +283,8 @@ io.on('connection', function(socket){
                 userListDatabase.forEach(function(user){
                     if(user.username === objectUser.username){
                         objectUser.avatar = user.avatar;
+                        console.log(`The avatar is ${objectUser.avatar}`);
+                        
                     }
                 });
             });
@@ -381,8 +386,11 @@ io.on('connection', function(socket){
             user : listUser[socket.id],
             channelId : messagePrivateObject.channelId,
             avatar : ``,
-            date : currentdate.getDate,
-            hour : currentdate.getHours
+            date : currentdate.getDate(),
+            month : currentdate.getMonth() + 1,
+            year : currentdate.getFullYear(),
+            hour : currentdate.getHours(),
+            minute : currentdate.getMinutes(),
         }
 
         const userData = fs.readFileSync(__dirname + '/database/user_database.json');

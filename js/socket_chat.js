@@ -40,6 +40,10 @@ socket.on('user connected' , (user)  =>{ // We receive the information. That wor
         console.log(userList);
         listUserDiv.innerHTML = ""; 
         userList.forEach(function(u, index){
+            if(!u.avatar){ // Reload if there is no avatar.
+                window.location.reload(); 
+                console.log("JE RELOAD");
+            }
             console.log(`User : ${u}`);
             listUserDiv.innerHTML += `<div class="user-div"><button class="user-button" index="${index}" onclick='selectUserMessagePrivate(${index}, "${urlParams.get('username')}", "${u.username}")'><img src="/ressources/avatars/${u.avatar}"><span class="username">${u.username}</span></button></div>`;
 
@@ -173,7 +177,13 @@ function createMessage(messageObj, username, targetDiv, avatarName){
     let p = document.createElement('p');
 
     if(currentdate.getDate() == messageObj.date){
-        p.innerHTML = `<span class="user-from">${messageObj.user}  &#160 <p>Today at ${messageObj.hour}:${messageObj.minute}</p></span>  <p class="message-is">${messageObj.message}</p>`;
+        p.innerHTML = `<span class="user-from">${messageObj.user}  &#160 <p style="font-size: 12px; font-weight:"normal";">Today at ${messageObj.hour}:${messageObj.minute}</p></span>  <p class="message-is">${messageObj.message}</p>`;
+    }
+    else if( messageObj.date - currentdate.getDate() == -1){
+        p.innerHTML = `<span class="user-from">${messageObj.user}  &#160 <p style="font-size: 12px; font-weight:"normal";">Yesterday at ${messageObj.hour}:${messageObj.minute}</p></span>  <p class="message-is">${messageObj.message}</p>`;
+    }
+    else{
+        p.innerHTML = `<span class="user-from">${messageObj.user}  &#160 <p style="font-size: 12px; font-weight:"normal";>${messageObj.date}/${messageObj.month}/${messageObj.year} ${messageObj.hour}:${messageObj.minute}</p></span>  <p class="message-is">${messageObj.message}</p>`;
     }
 
     

@@ -29,7 +29,7 @@ body {
   height: 100%;
   width: 100%; 
 
-  background-color: white;
+  background-color: #1a1a1a;
 }
 
 .chat .square-chat .private-message{
@@ -112,6 +112,13 @@ body {
 
 }
 
+.chat .square-chat .return-public-chat p {
+  display:flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
 .chat .square-chat .list-user-div .user-button .username{
   color: rgb(141, 141, 141);
 }
@@ -189,6 +196,8 @@ body {
   padding: 12px;
   margin-right: 20px;
   border-radius: 15px;
+
+  background-color: #363636;
 }
 .chat .square-chat .chat-general .message-input .send-message{
   display: flex;
@@ -201,10 +210,21 @@ body {
 
 .chat-general .user-from{
   display: flex;
+
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  margin-bottom: 2px;
+}
+
+
+.message-is{
+  color: white;
 }
 
 .chat-general span{
-  color: white;
+  color: rgb(235, 235, 235);
   font-weight: bold;
 }
 
@@ -276,4 +296,79 @@ button{
   border: none;
   
   cursor: pointer;
+}
+
+/* Responsive Mobile */ 
+
+@media (max-width: 500px) {
+
+  .chat .square-chat .return-public-chat button{
+    background: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 30px;
+
+  }
+  .chat .square-chat .return-public-chat button span{
+    display : none;
+  }
+  .chat .square-chat .return-public-chat button .button-image-public{
+    display: block!important;
+
+    width: 20px;
+    height: 20px;
+  }
+  
+  .chat .square-chat  .list-user-div .user-button img {
+    display: none;
+  }
+
+  .chat .square-chat .chat-general .message-input .chat-message{
+    font-size: 10px;
+
+    height: 35px;
+  }
+  .chat .square-chat .private-message .text-screen{
+    display: none;
+  }
+
+  .chat .square-chat .private-message .text-mobile{
+    display: flex!important;
+
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+  }
+
+
+  .green{
+  
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  .blue{
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  .avatar-icon img{
+    width: 30px;
+    height: 30px;
+  }
+  .message-is{
+    font-size: 12px;
+  }
+
+  .user-from{
+    font-size: 13px;
+  }
+
+  .username{
+    font-size: 10px;
+  }
 }
